@@ -1,4 +1,6 @@
-boto3
 uvicorn
-requests
 fastapi
+typing
+pydantic
+boto3
+requests
