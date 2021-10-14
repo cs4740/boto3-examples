@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
+from typing import Optional
+from pydantic import BaseModel
 from fastapi import FastAPI
 import boto3
 
 app = FastAPI()
+
+class State(BaseModel):
+    state: Optional[str] = None
 
 @app.get("/")  # zone apex
 def read_root():
@@ -37,3 +42,8 @@ def get_instance_state(instance_id):
     )
     State = response['Reservations'][0]['Instances'][0]['State']['Name']
     return {"InstanceState": State}
+
+@app.post("/instance/{instance_id}/state")
+def update_state(instance_id, state: State):
+    # ec2 = boto3.client("ec2")
+    return state
